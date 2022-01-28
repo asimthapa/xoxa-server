@@ -54,4 +54,9 @@ public class Session {
     public void setJoinToken(String joinToken) {
         this.joinToken = joinToken;
     }
+
+    @Override
+    public String toString() {
+        return String.format("id: %s\ntoken: %s\nusers: %s\njoinToken: %s\n", id, token, users.toString(), joinToken);
+    }
 }
