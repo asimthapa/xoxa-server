@@ -8,7 +8,7 @@ Start the application
 
 ### Run the xoxa-client
 
-## Run without xoxa-client (not functional)
+### Run without xoxa-client (not functional)
 localhost:8080 also serves up a page from src/main/resources/static/app.js which can be used to just check the app.
 
 ## ISSUES 
