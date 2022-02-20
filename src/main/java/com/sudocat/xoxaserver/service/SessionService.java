@@ -1,7 +1,7 @@
 package com.sudocat.xoxaserver.service;
 
 import com.sudocat.xoxaserver.domain.JoinRequest;
-import com.sudocat.xoxaserver.domain.Session;
+import com.sudocat.xoxaserver.domain.ChatSession;
 import com.sudocat.xoxaserver.repository.SessionRepository;
 import com.sudocat.xoxaserver.utils.RandomString;
 import org.bson.types.ObjectId;
@@ -23,31 +23,31 @@ public class SessionService {
         this.sessionRepository = sessionRepository;
     }
 
-    public String createSession(String userName) {
+    public ChatSession createSession(String userName) {
         String sessionId = new ObjectId().toString();
         String sessionToken = new RandomString().nextString();
         String sessionJoinToken = new RandomString(8, ThreadLocalRandom.current()).nextString();
-        Session newSession = new Session(sessionId, sessionToken, Collections.singleton(userName), sessionJoinToken);
+        ChatSession newSession = new ChatSession(sessionId, sessionToken, Collections.singleton(userName), sessionJoinToken);
 
         sessionRepository.insert(newSession);
         logger.info(String.format("\nCreated session with: \n%s", newSession));
-        return newSession.getId();
+        return newSession;
     }
 
-    public String joinSession(JoinRequest joinRequest) {
+    public ChatSession joinSession(JoinRequest joinRequest) {
         String newUser = joinRequest.getUserId();
-        Optional<Session> onGoing = sessionRepository.findById(joinRequest.getSessionId());
+        Optional<ChatSession> onGoing = sessionRepository.findById(joinRequest.getSessionId());
         if (onGoing.isPresent() &&
             onGoing.get().getId().equals(joinRequest.getSessionId()) &&
             onGoing.get().getJoinToken().equals(joinRequest.getJoinToken())){
-            Session session = onGoing.get();
+            ChatSession session = onGoing.get();
             if (!session.getUsers().contains(newUser)) {
                 session.getUsers().add(newUser);
                 sessionRepository.save(session);
             }
-            return session.getId();
         } else {
-           return null;
+            throw new RuntimeException("Session info is wrong");
         }
+        return onGoing.get();
     }
 }

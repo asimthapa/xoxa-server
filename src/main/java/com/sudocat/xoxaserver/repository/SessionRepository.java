@@ -1,10 +1,10 @@
 package com.sudocat.xoxaserver.repository;
 
-import com.sudocat.xoxaserver.domain.Session;
+import com.sudocat.xoxaserver.domain.ChatSession;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface SessionRepository extends MongoRepository<Session, String> {
+public interface SessionRepository extends MongoRepository<ChatSession, String> {
 
 }

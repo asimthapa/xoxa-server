@@ -6,17 +6,17 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.Set;
 
 @Document("sessions")
-public class Session {
+public class ChatSession {
     @Id
     private String id;
     private String token;
     private Set<String> users;
     private String joinToken;
 
-    public Session() {
+    public ChatSession() {
     }
 
-    public Session(String id, String token, Set<String> users, String joinToken) {
+    public ChatSession(String id, String token, Set<String> users, String joinToken) {
         this.id = id;
         this.token = token;
         this.users = users;

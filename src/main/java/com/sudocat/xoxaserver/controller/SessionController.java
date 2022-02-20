@@ -1,7 +1,7 @@
 package com.sudocat.xoxaserver.controller;
 
+import com.sudocat.xoxaserver.domain.ChatSession;
 import com.sudocat.xoxaserver.domain.JoinRequest;
-import com.sudocat.xoxaserver.domain.Session;
 import com.sudocat.xoxaserver.service.SessionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,16 +22,15 @@ public class SessionController {
     }
 
     @PostMapping("/xoxa/session/create")
-    public String createSession(@RequestBody String userName) {
+    public ChatSession createSession(@RequestBody String userName) {
         logger.info(String.format("Received create session request from user: %s", userName));
         return sessionService.createSession(userName);
     }
 
     @PostMapping("/xoxa/session/join")
-    public String joinSession(@RequestBody JoinRequest joinRequest) {
+    public ChatSession joinSession(@RequestBody JoinRequest joinRequest) {
         logger.info(String.format("Received join session request for %s from user: %s",
             joinRequest.getSessionId(), joinRequest.getUserId()));
-        
         return sessionService.joinSession(joinRequest);
     }
 }
